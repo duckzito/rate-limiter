@@ -1,0 +1,10 @@
+version: '3.8' # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  mongodb:
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"

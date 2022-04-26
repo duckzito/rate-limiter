@@ -64,12 +64,14 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secretKey).build()
-                    .parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
+
+            return !claims.getBody().getExpiration().before(new Date());
+            /*
             if (claims.getBody().getExpiration().before(new Date())) {
                 return false;
             }
-            return true;
+            return true;*/
         } catch (JwtException | IllegalArgumentException e) {
             log.info("Invalid JWT token.");
             log.trace("Invalid JWT token trace.", e);

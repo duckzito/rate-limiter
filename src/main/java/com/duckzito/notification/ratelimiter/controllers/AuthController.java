@@ -2,6 +2,7 @@ package com.duckzito.notification.ratelimiter.controllers;
 
 import com.duckzito.notification.ratelimiter.config.JwtTokenProvider;
 import com.duckzito.notification.ratelimiter.domain.AuthenticationRequest;
+import io.github.bucket4j.Bucket4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ public class AuthController {
 
     @PostMapping("/token")
     public Mono<ResponseEntity> login(@Valid @RequestBody Mono<AuthenticationRequest> authRequest) {
+
         return authRequest
                 .flatMap(login -> authenticationManager
                         .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()))
